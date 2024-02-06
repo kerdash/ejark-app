@@ -1,0 +1,17 @@
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    faq(
+      id: ID @eq
+    ): Faq @find
+
+    faqs: Faq @paginate
+}
+
+type Faq {
+    id: ID!
+    question: String
+    answer: String
+    created_at: DateTime
+    updated_at: DateTime
+}

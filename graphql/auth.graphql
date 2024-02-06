@@ -1,0 +1,27 @@
+extend type Mutation {
+  register(
+    name: String @rules(apply: ["min:2"]),
+    email: String! @rules(apply: ["email", "unique:users,email"])
+    phone: String! @rules(apply: ["numeric", "min:9", "unique:users,phone"])
+    phone_country_code: String! @rules(apply: ["numeric", "exists:countries,phonecode"]),
+    account_type: String @rules(apply: ["in:owner,tenant"])
+    password: String! @rules(apply: ["min:6"])
+  ): String!
+
+  login(
+    identifier: String!,
+    password: String!
+  ): String!
+
+  logout: String! @guard
+
+  phone_password_recovery(
+    phone: String! @rules(apply: ["numeric", "min:9", "unique:users,phone"])
+    phone_country_code: String! @rules(apply: ["numeric", "exists:countries,phonecode"]),
+    code: String! @rules(apply: ["digits:6"])
+  ): String!
+}
+
+extend type Query {
+  me: User! @guard @auth
+}

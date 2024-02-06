@@ -1,0 +1,13 @@
+extend type Query {
+    countries: [Country!]! @all
+    country(id: ID @eq): Country @find
+}
+
+type Country {
+    id: ID
+    iso: String
+    name: String
+    iso3: String
+    numcode: String
+    phonecode: String
+}
